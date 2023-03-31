@@ -2,7 +2,9 @@ package br.com.fafic.ppi.nossaBiblioteca.controller;
 
 import br.com.fafic.ppi.nossaBiblioteca.domain.*;
 import br.com.fafic.ppi.nossaBiblioteca.service.*;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
+import javax.validation.Validator;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class BibliotecaController {
     private final LivroService livroService;
     private final AlunoService alunoService;
     private final ProfessorService professorService;
+
+    private Validator validator;
 
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid Biblioteca biblioteca){
@@ -47,45 +51,6 @@ public class BibliotecaController {
         if (optionalBiblioteca.isPresent()) {
             Biblioteca biblioteca = optionalBiblioteca.get();
             biblioteca.setBibliotecario(bibliotecarioService.findById(bibliotecario.getId()));
-            bibliotecaService.save(biblioteca);
-            return ResponseEntity.ok(biblioteca);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/{id}/livros")
-    public ResponseEntity<Biblioteca> adicionarLivros(@PathVariable Long id) {
-        Optional<Biblioteca> optionalBiblioteca = Optional.ofNullable(bibliotecaService.findById(id));
-        if (optionalBiblioteca.isPresent()) {
-            Biblioteca biblioteca = optionalBiblioteca.get();
-            biblioteca.setLivros(livroService.findAll());
-            bibliotecaService.save(biblioteca);
-            return ResponseEntity.ok(biblioteca);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/{id}/alunos")
-    public ResponseEntity<Biblioteca> adicionarAlunos(@PathVariable Long id) {
-        Optional<Biblioteca> optionalBiblioteca = Optional.ofNullable(bibliotecaService.findById(id));
-        if (optionalBiblioteca.isPresent()) {
-            Biblioteca biblioteca = optionalBiblioteca.get();
-            biblioteca.setAlunos(alunoService.findAll());
-            bibliotecaService.save(biblioteca);
-            return ResponseEntity.ok(biblioteca);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/{id}/professor")
-    public ResponseEntity<Biblioteca> adicionarProfessor(@PathVariable Long id) {
-        Optional<Biblioteca> optionalBiblioteca = Optional.ofNullable(bibliotecaService.findById(id));
-        if (optionalBiblioteca.isPresent()) {
-            Biblioteca biblioteca = optionalBiblioteca.get();
-            biblioteca.setProfessores(professorService.findAll());
             bibliotecaService.save(biblioteca);
             return ResponseEntity.ok(biblioteca);
         } else {

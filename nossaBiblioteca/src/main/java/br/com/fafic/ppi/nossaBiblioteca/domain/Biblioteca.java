@@ -1,8 +1,7 @@
 package br.com.fafic.ppi.nossaBiblioteca.domain;
 
-import br.com.fafic.ppi.nossaBiblioteca.enums.GeneroEnum;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -2,7 +2,7 @@ package br.com.fafic.ppi.nossaBiblioteca.controller.exception;
 
 import br.com.fafic.ppi.nossaBiblioteca.Exception.DefaultException;
 import br.com.fafic.ppi.nossaBiblioteca.domain.exception.ObjectNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;

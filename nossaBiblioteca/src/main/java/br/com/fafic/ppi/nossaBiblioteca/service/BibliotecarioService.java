@@ -3,6 +3,7 @@ package br.com.fafic.ppi.nossaBiblioteca.service;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Bibliotecario;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Contato;
 import br.com.fafic.ppi.nossaBiblioteca.domain.exception.ObjectNotFoundException;
+import br.com.fafic.ppi.nossaBiblioteca.dto.BibliotecarioDTO;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.BibliotecarioRepository;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.ContatoRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,14 @@ public class BibliotecarioService {
 
     private final BibliotecarioRepository bibliotecarioRepository;
 
-    public Bibliotecario save(Bibliotecario bibliotecario){
+    public Bibliotecario save(BibliotecarioDTO bibliotecarioDTO){
+        var bibliotecario = new Bibliotecario(bibliotecarioDTO.getNome(),
+                bibliotecarioDTO.getCpf(),
+                bibliotecarioDTO.getMatricula(),
+                bibliotecarioDTO.getGenero(),
+                bibliotecarioDTO.getEndereco(),
+                bibliotecarioDTO.getContato(),
+                bibliotecarioDTO.getLogin());
         return bibliotecarioRepository.save(bibliotecario);
     }
 

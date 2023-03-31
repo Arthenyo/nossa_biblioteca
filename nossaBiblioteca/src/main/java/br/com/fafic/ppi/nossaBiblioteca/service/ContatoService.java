@@ -30,6 +30,12 @@ public class ContatoService {
                 .orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = " + id));
     }
     public void deleteContato(Long id) {
-        contatoRepository.deleteById(id);
+        var contato = contatoRepository.findById(id);
+        if(contato.isPresent()){
+            contatoRepository.deleteById(id);
+        }
+        else {
+            contato.orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = "+ id));
+        }
     }
 }

@@ -3,9 +3,11 @@ package br.com.fafic.ppi.nossaBiblioteca.controller;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Livro;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Login;
 import br.com.fafic.ppi.nossaBiblioteca.service.LoginService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.Validator;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,7 @@ import java.util.Optional;
 public class LoginController {
 
     private final LoginService loginService;
-
-    @PostMapping
-    public ResponseEntity save(@RequestBody @Valid Login login){
-        return ResponseEntity.status(HttpStatus.CREATED).body(loginService.save(login));
-    }
+    private Validator validator;
 
     @GetMapping
     public List<Login> findAll(){
@@ -34,15 +32,5 @@ public class LoginController {
     @GetMapping("/{id}")
     public ResponseEntity<Login> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(loginService.findById(id));
-    }
-
-    @PutMapping
-    public ResponseEntity update (@RequestBody Login login){
-        return ResponseEntity.status(HttpStatus.OK).body(loginService.save(login));
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id) {
-        loginService.deleteLogin(id);
     }
 }

@@ -1,9 +1,12 @@
 package br.com.fafic.ppi.nossaBiblioteca.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import br.com.fafic.ppi.nossaBiblioteca.enums.GeneroEnum;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "Tipo")
 @Data
+@NoArgsConstructor
 public abstract class Pessoa {
 
     @Id
@@ -25,10 +29,23 @@ public abstract class Pessoa {
     private String cpf;
     @Column(unique = true)
     private String matricula;
+
+    @Enumerated(EnumType.STRING)
+    private GeneroEnum genero;
     @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
     @OneToOne(cascade = CascadeType.ALL)
     private Contato contato;
     @OneToOne(cascade = CascadeType.ALL)
     private Login login;
+
+    public Pessoa(String nome, String cpf, String matricula, GeneroEnum genero, Endereco endereco, Contato contato, Login login) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.matricula = matricula;
+        this.genero = genero;
+        this.endereco = endereco;
+        this.contato = contato;
+        this.login = login;
+    }
 }

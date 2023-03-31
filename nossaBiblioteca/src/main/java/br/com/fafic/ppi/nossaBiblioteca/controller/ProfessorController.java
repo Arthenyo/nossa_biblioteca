@@ -2,7 +2,9 @@ package br.com.fafic.ppi.nossaBiblioteca.controller;
 
 import br.com.fafic.ppi.nossaBiblioteca.domain.*;
 import br.com.fafic.ppi.nossaBiblioteca.service.*;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
+import javax.validation.Validator;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,9 @@ public class ProfessorController {
     private final EnderecoService enderecoService;
     private final ContatoService contatoService;
     private final LoginService loginService;
+    private Validator validator;
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody @Valid Professor professor){
-        return ResponseEntity.status(HttpStatus.CREATED).body(professorService.save(professor));
-    }
+
 
     @GetMapping
     public List<Professor> findAll(){
@@ -34,10 +34,6 @@ public class ProfessorController {
     @GetMapping("/{id}")
     public ResponseEntity<Professor> findById(@PathVariable("id") Long id){
         return ResponseEntity.ok(professorService.findById(id));
-    }
-    @PutMapping
-    public ResponseEntity update (@RequestBody Professor professor){
-        return ResponseEntity.status(HttpStatus.CREATED).body(professorService.save(professor));
     }
 
     @PostMapping("/{id}/endereco")
@@ -79,8 +75,5 @@ public class ProfessorController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteContato(@PathVariable("id") Long id) {
-        professorService.deleteProfessor(id);
-    }
+
 }
