@@ -1,6 +1,7 @@
 package br.com.fafic.ppi.nossaBiblioteca.controller;
 
 import br.com.fafic.ppi.nossaBiblioteca.domain.*;
+import br.com.fafic.ppi.nossaBiblioteca.dto.EmprestimoDTO;
 import br.com.fafic.ppi.nossaBiblioteca.service.*;
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -19,10 +20,9 @@ import java.util.Optional;
 public class ProfessorController {
 
     private final ProfessorService professorService;
-    private final EnderecoService enderecoService;
-    private final ContatoService contatoService;
-    private final LoginService loginService;
-    private Validator validator;
+    private final LivroService livroService;
+    private final EmprestimoService emprestimoService;
+    private Professor professor;
 
 
 
@@ -35,41 +35,21 @@ public class ProfessorController {
     public ResponseEntity<Professor> findById(@PathVariable("id") Long id){
         return ResponseEntity.ok(professorService.findById(id));
     }
-
-    @PostMapping("/{id}/endereco")
-    public ResponseEntity<Professor> adicionarendereco(@PathVariable Long id, @RequestBody Endereco endereco) {
-        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
-        if (optionalProfessor.isPresent()) {
-            Professor professor = optionalProfessor.get();
-            professor.setEndereco(endereco);
-            enderecoService.save(endereco);
-            return ResponseEntity.ok(professor);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/emprestimo")
+    public ResponseEntity<Emprestimo> saveEmprestimo(@RequestBody @Valid EmprestimoDTO emprestimoDTO, Long professorid, Long livro){
+        professorService.findById(professorid);
+        livroService.findById(livro);
+        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoService.save(emprestimoDTO));
     }
-
-    @PostMapping("/{id}/contato")
-    public ResponseEntity<Professor> adicionarcontato(@PathVariable Long id, @RequestBody Contato contato) {
-        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
-        if (optionalProfessor.isPresent()) {
-            Professor professor = optionalProfessor.get();
-            professor.setContato(contato);
-            contatoService.save(contato);
-            return ResponseEntity.ok(professor);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping("/{id}/login")
-    public ResponseEntity<Professor> adicionarlogin(@PathVariable Long id, @RequestBody Login login) {
-        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
-        if (optionalProfessor.isPresent()) {
-            Professor professor = optionalProfessor.get();
-            professor.setLogin(login);
-            loginService.save(login);
-            return ResponseEntity.ok(professor);
+    @PostMapping("/emprestimo/{id}/livros")
+    public ResponseEntity<Emprestimo> adicionarLivroEmprestimo(@PathVariable Long id, @RequestBody Livro livro) {
+        Optional<Emprestimo> optionalEmprestimo = Optional.ofNullable(emprestimoService.findById(id));
+        if (optionalEmprestimo.isPresent()) {
+            Emprestimo emprestimo = optionalEmprestimo.get();
+            livro.setEmprestimo(emprestimo);
+            livroService.findById(id);
+            emprestimo.setLivro(livro);
+            return ResponseEntity.ok(emprestimo);
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Contato {
 
@@ -25,4 +23,9 @@ public class Contato {
     @NotBlank(message = "O campo numero nao pode estar em branco!!")
     @Size(max = 12,message = "Numero incorreto")
     private String numero;
+
+    public Contato(String email, String numero) {
+        this.email = email;
+        this.numero = numero;
+    }
 }

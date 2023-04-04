@@ -1,6 +1,7 @@
 package br.com.fafic.ppi.nossaBiblioteca.controller;
 
 import br.com.fafic.ppi.nossaBiblioteca.domain.*;
+import br.com.fafic.ppi.nossaBiblioteca.dto.BibliotecaDTO;
 import br.com.fafic.ppi.nossaBiblioteca.service.*;
 import javax.validation.Valid;
 import javax.validation.Validator;
@@ -27,8 +28,8 @@ public class BibliotecaController {
     private Validator validator;
 
     @PostMapping
-    public ResponseEntity save(@RequestBody @Valid Biblioteca biblioteca){
-        return ResponseEntity.status(HttpStatus.CREATED).body(bibliotecaService.save(biblioteca));
+    public ResponseEntity save(@RequestBody @Valid BibliotecaDTO bibliotecaDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(bibliotecaService.save(bibliotecaDTO));
     }
 
     @GetMapping
@@ -41,8 +42,8 @@ public class BibliotecaController {
         return ResponseEntity.ok(bibliotecaService.findById(id));
     }
     @PutMapping
-    public ResponseEntity update (@RequestBody Biblioteca biblioteca){
-        return ResponseEntity.status(HttpStatus.CREATED).body(bibliotecaService.save(biblioteca));
+    public ResponseEntity update (@RequestBody BibliotecaDTO bibliotecaDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(bibliotecaService.save(bibliotecaDTO));
     }
 
     @PostMapping("/{id}/bibliotecario")
@@ -51,7 +52,7 @@ public class BibliotecaController {
         if (optionalBiblioteca.isPresent()) {
             Biblioteca biblioteca = optionalBiblioteca.get();
             biblioteca.setBibliotecario(bibliotecarioService.findById(bibliotecario.getId()));
-            bibliotecaService.save(biblioteca);
+            bibliotecaService.save(new BibliotecaDTO());
             return ResponseEntity.ok(biblioteca);
         } else {
             return ResponseEntity.notFound().build();

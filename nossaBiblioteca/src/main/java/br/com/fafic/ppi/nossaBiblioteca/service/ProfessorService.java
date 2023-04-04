@@ -38,6 +38,12 @@ public class ProfessorService {
                 .orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = " + id));
     }
     public void deleteProfessor(Long id) {
-        professorRepository.deleteById(id);
+        var professor = professorRepository.findById(id);
+        if(professor.isPresent()){
+            professorRepository.deleteById(id);
+        }
+        else {
+            professor.orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = "+ id));
+        }
     }
 }

@@ -1,9 +1,7 @@
 package br.com.fafic.ppi.nossaBiblioteca.controller;
 
 import br.com.fafic.ppi.nossaBiblioteca.domain.*;
-import br.com.fafic.ppi.nossaBiblioteca.dto.AlunoDTO;
-import br.com.fafic.ppi.nossaBiblioteca.dto.BibliotecarioDTO;
-import br.com.fafic.ppi.nossaBiblioteca.dto.ProfessorDTO;
+import br.com.fafic.ppi.nossaBiblioteca.dto.*;
 import br.com.fafic.ppi.nossaBiblioteca.service.*;
 
 import javax.validation.Valid;
@@ -32,6 +30,7 @@ public class BibliotecarioController {
     private final ContatoService contatoService;
     private final LoginService loginService;
     private final BibliotecaService bibliotecaService;
+    private Livro livro;
     private Validator validator;
 
     @PostMapping
@@ -47,28 +46,24 @@ public class BibliotecarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(professorService.save(professorDTO));
     }
     @PostMapping("/contato")
-    public ResponseEntity<Contato> saveContato(@RequestBody @Valid Contato contato){
-        return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.save(contato));
+    public ResponseEntity<Contato> saveContato(@RequestBody @Valid ContatoDTO contatoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.save(contatoDTO));
     }
     @PostMapping("/devolucao")
-    public ResponseEntity<Devolucao> saveDevolucao(@RequestBody @Valid Devolucao devolucao){
-        return ResponseEntity.status(HttpStatus.CREATED).body(devolucaoService.save(devolucao));
-    }
-    @PostMapping("/emprestimo")
-    public ResponseEntity<Emprestimo> saveEmprestimo(@RequestBody @Valid Emprestimo emprestimo){
-        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoService.save(emprestimo));
+    public ResponseEntity<Devolucao> saveDevolucao(@RequestBody @Valid DevolucaoDTO devolucaoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(devolucaoService.save(devolucaoDTO));
     }
     @PostMapping("/endereco")
-    public ResponseEntity<Endereco> saveEndereco(@RequestBody @Valid Endereco endereco){
-        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(endereco));
+    public ResponseEntity<Endereco> saveEndereco(@RequestBody @Valid EnderecoDTO enderecoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(enderecoDTO));
     }
     @PostMapping("/livro")
-    public ResponseEntity<Livro> saveLivro(@RequestBody @Valid Livro livro){
-        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
+    public ResponseEntity<Livro> saveLivro(@RequestBody @Valid LivroDTO livroDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livroDTO));
     }
     @PostMapping("/login")
-    public ResponseEntity<Login> saveLogin(@RequestBody @Valid Login login){
-        return ResponseEntity.status(HttpStatus.CREATED).body(loginService.save(login));
+    public ResponseEntity<Login> saveLogin(@RequestBody @Valid LoginDTO loginDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(loginService.save(loginDTO));
     }
     @GetMapping
     public List<Bibliotecario> findAll(){
@@ -87,24 +82,24 @@ public class BibliotecarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(alunoService.save(alunoDTO));
     }
     @PutMapping("/contato")
-    public ResponseEntity<Contato> updateContato (@RequestBody Contato contato){
-        return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.save(contato));
+    public ResponseEntity<Contato> updateContato (@RequestBody ContatoDTO contatoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.save(contatoDTO));
     }
     @PutMapping("/devolucao")
-    public ResponseEntity<Devolucao> updateDevolucao (@RequestBody Devolucao devolucao){
-        return ResponseEntity.status(HttpStatus.CREATED).body(devolucaoService.save(devolucao));
+    public ResponseEntity<Devolucao> updateDevolucao (@RequestBody DevolucaoDTO devolucaoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(devolucaoService.save(devolucaoDTO));
     }
     @PutMapping("/endereco")
-    public ResponseEntity<Endereco> updateEndereco (@RequestBody Endereco endereco){
-        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(endereco));
+    public ResponseEntity<Endereco> updateEndereco (@RequestBody EnderecoDTO enderecoDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.save(enderecoDTO));
     }
     @PutMapping("/livro")
-    public ResponseEntity<Livro> updateLivro (@RequestBody Livro livro){
-        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
+    public ResponseEntity<Livro> updateLivro (@RequestBody LivroDTO livroDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livroDTO));
     }
     @PutMapping("/login")
-    public ResponseEntity<Login> updateLogin (@RequestBody Login login){
-        return ResponseEntity.status(HttpStatus.OK).body(loginService.save(login));
+    public ResponseEntity<Login> updateLogin (@RequestBody LoginDTO loginDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(loginService.save(loginDTO));
     }
     @PutMapping("/professor")
     public ResponseEntity<Professor> updateProfessor (@RequestBody ProfessorDTO professorDTO){
@@ -160,7 +155,7 @@ public class BibliotecarioController {
         if (optionalAluno.isPresent()) {
             Aluno aluno = optionalAluno.get();
             aluno.setContato(contato);
-            contatoService.save(contato);
+            contatoService.save(new ContatoDTO());
             return ResponseEntity.ok(aluno);
         } else {
             return ResponseEntity.notFound().build();
@@ -172,7 +167,7 @@ public class BibliotecarioController {
         if (optionalAluno.isPresent()) {
             Aluno aluno = optionalAluno.get();
             aluno.setLogin(login);
-            loginService.save(login);
+            loginService.save(new LoginDTO());
             return ResponseEntity.ok(aluno);
         } else {
             return ResponseEntity.notFound().build();
@@ -184,7 +179,7 @@ public class BibliotecarioController {
         if (optionalBiblioteca.isPresent()) {
             Biblioteca biblioteca = optionalBiblioteca.get();
             biblioteca.setLivros(livroService.findAll());
-            bibliotecaService.save(biblioteca);
+            bibliotecaService.save(new BibliotecaDTO());
             return ResponseEntity.ok(biblioteca);
         } else {
             return ResponseEntity.notFound().build();
@@ -196,7 +191,7 @@ public class BibliotecarioController {
         if (optionalBiblioteca.isPresent()) {
             Biblioteca biblioteca = optionalBiblioteca.get();
             biblioteca.setAlunos(alunoService.findAll());
-            bibliotecaService.save(biblioteca);
+            bibliotecaService.save(new BibliotecaDTO());
             return ResponseEntity.ok(biblioteca);
         } else {
             return ResponseEntity.notFound().build();
@@ -208,21 +203,46 @@ public class BibliotecarioController {
         if (optionalBiblioteca.isPresent()) {
             Biblioteca biblioteca = optionalBiblioteca.get();
             biblioteca.setProfessores(professorService.findAll());
-            bibliotecaService.save(biblioteca);
+            bibliotecaService.save(new BibliotecaDTO());
             return ResponseEntity.ok(biblioteca);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/emprestimo/{id}/livros")
-    public ResponseEntity<Emprestimo> adicionarLivroEmprestimo(@PathVariable Long id, @RequestBody Livro livro) {
-        Optional<Emprestimo> optionalEmprestimo = Optional.ofNullable(emprestimoService.findById(id));
-        if (optionalEmprestimo.isPresent()) {
-            Emprestimo emprestimo = optionalEmprestimo.get();
-            livro.setEmprestimo(emprestimo);
-            livroService.findById(id);
-            emprestimo.setLivro(livro);
-            return ResponseEntity.ok(emprestimo);
+    @PutMapping("/professor/{id}/endereco")
+    public ResponseEntity<Professor> adicionarenderecoProfessor(@PathVariable Long id, @RequestBody Endereco endereco) {
+        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
+        if (optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            professor.setEndereco(endereco);
+            enderecoService.save(new EnderecoDTO());
+            return ResponseEntity.ok(professor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/professor/{id}/contato")
+    public ResponseEntity<Professor> adicionarcontatoProfessor(@PathVariable Long id, @RequestBody Contato contato) {
+        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
+        if (optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            professor.setContato(contato);
+            contatoService.save(new ContatoDTO());
+            return ResponseEntity.ok(professor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/professor/{id}/login")
+    public ResponseEntity<Professor> adicionarloginProfessor(@PathVariable Long id, @RequestBody Login login) {
+        Optional<Professor> optionalProfessor = Optional.ofNullable(professorService.findById(id));
+        if (optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            professor.setLogin(login);
+            loginService.save(new LoginDTO());
+            return ResponseEntity.ok(professor);
         } else {
             return ResponseEntity.notFound().build();
         }

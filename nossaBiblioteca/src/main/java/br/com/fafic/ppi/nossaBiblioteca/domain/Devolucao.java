@@ -10,8 +10,6 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Devolucao{
     @Id
@@ -21,4 +19,8 @@ public class Devolucao{
     private Emprestimo emprestimo;
     private LocalDate dataDeDevolucao;
 
+    public Devolucao(Emprestimo emprestimo, LocalDate dataDeDevolucao) {
+        this.emprestimo = emprestimo;
+        this.dataDeDevolucao = dataDeDevolucao;
+    }
 }

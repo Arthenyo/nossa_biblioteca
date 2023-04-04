@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Login {
 
@@ -26,4 +24,9 @@ public class Login {
     private String usuario;
     @NotBlank(message = "O campo senha nao pode estar em branco!!")
     private String senha;
+
+    public Login(String usuario, String senha) {
+        this.usuario = usuario;
+        this.senha = senha;
+    }
 }

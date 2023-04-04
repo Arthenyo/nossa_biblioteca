@@ -37,6 +37,12 @@ public class BibliotecarioService {
                 .orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = " + id));
     }
     public void deleteBibliotecario(Long id) {
-        bibliotecarioRepository.deleteById(id);
+        var bibliotecario = bibliotecarioRepository.findById(id);
+        if(bibliotecario.isPresent()){
+            bibliotecarioRepository.deleteById(id);
+        }
+        else {
+            bibliotecario.orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = "+ id));
+        }
     }
 }

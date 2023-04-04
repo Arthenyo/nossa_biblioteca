@@ -43,14 +43,14 @@ public class ControllerExceptionHandler {
                 .timestamp(LocalDateTime.now()).build());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<DefaultException> handleException(Exception ex,HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(DefaultException.builder()
-                .status(HttpStatus.NO_CONTENT.value())
-                .error("erro de parametro")
-                .messagem(ex.getMessage())
-                .path(request.getRequestURI())
-                .status(HttpStatus.NO_CONTENT.value())
-                .timestamp(LocalDateTime.now()).build());
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<DefaultException> handleException(Exception ex,HttpServletRequest request) {
+//        return ResponseEntity.status(HttpStatus.OK).body(DefaultException.builder()
+//                .status(HttpStatus.NO_CONTENT.value())
+//                .error("erro de parametro")
+//                .messagem(ex.getMessage())
+//                .path(request.getRequestURI())
+//                .status(HttpStatus.NO_CONTENT.value())
+//                .timestamp(LocalDateTime.now()).build());
+//    }
 }

@@ -26,6 +26,7 @@ public abstract class Pessoa {
     private String nome;
     @CPF
     @NotBlank
+    @Column(unique = true)
     private String cpf;
     @Column(unique = true)
     private String matricula;

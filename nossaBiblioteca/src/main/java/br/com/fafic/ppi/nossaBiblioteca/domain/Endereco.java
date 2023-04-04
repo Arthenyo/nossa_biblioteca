@@ -7,8 +7,6 @@ import lombok.*;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Endereco {
 
@@ -26,4 +24,11 @@ public class Endereco {
     @NotBlank(message = "O campo uf nao pode estar em branco!!")
     private String uf;
 
+    public Endereco(String rua, Integer numero, String bairro, String cidade, String uf) {
+        this.rua = rua;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+    }
 }

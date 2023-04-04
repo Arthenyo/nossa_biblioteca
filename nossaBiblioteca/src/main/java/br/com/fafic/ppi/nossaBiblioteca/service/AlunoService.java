@@ -36,6 +36,12 @@ public class AlunoService {
                 .orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = " + id));
     }
     public void deleteAluno(Long id) {
-        alunoRepository.deleteById(id);
+        var aluno = alunoRepository.findById(id);
+        if(aluno.isPresent()){
+            alunoRepository.deleteById(id);
+        }
+        else {
+            aluno.orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = "+ id));
+        }
     }
 }

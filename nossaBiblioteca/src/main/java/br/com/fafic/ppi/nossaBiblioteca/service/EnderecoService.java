@@ -3,6 +3,7 @@ package br.com.fafic.ppi.nossaBiblioteca.service;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Contato;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Endereco;
 import br.com.fafic.ppi.nossaBiblioteca.domain.exception.ObjectNotFoundException;
+import br.com.fafic.ppi.nossaBiblioteca.dto.EnderecoDTO;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.ContatoRepository;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,12 @@ public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
 
-    public Endereco save(Endereco endereco){
+    public Endereco save(EnderecoDTO enderecoDTO){
+        var endereco = new Endereco(enderecoDTO.getRua(),
+                enderecoDTO.getNumero(),
+                enderecoDTO.getBairro(),
+                enderecoDTO.getCidade(),
+                enderecoDTO.getUf());
         return enderecoRepository.save(endereco);
     }
 
@@ -34,6 +40,12 @@ public class EnderecoService {
         enderecoRepository.save(endereco);
     }
     public void deleteEndereco(Long id) {
-        enderecoRepository.deleteById(id);
+        var endereco = enderecoRepository.findById(id);
+        if(endereco.isPresent()){
+            enderecoRepository.deleteById(id);
+        }
+        else {
+            endereco.orElseThrow(()-> new ObjectNotFoundException("Não existe na base de dados o Id = "+ id));
+        }
     }
 }

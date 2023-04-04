@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Livro {
         @Id
@@ -26,7 +24,13 @@ public class Livro {
         private String nome;
         @Enumerated(EnumType.STRING)
         private AreaEnum area;
-        @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "emprestimo_id")
+        @OneToOne(cascade = CascadeType.ALL)
         private Emprestimo emprestimo;
+
+        public Livro(String isbn, String nome, AreaEnum area, Emprestimo emprestimo) {
+                this.isbn = isbn;
+                this.nome = nome;
+                this.area = area;
+                this.emprestimo = emprestimo;
+        }
 }

@@ -3,6 +3,7 @@ package br.com.fafic.ppi.nossaBiblioteca.service;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Contato;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Login;
 import br.com.fafic.ppi.nossaBiblioteca.domain.exception.ObjectNotFoundException;
+import br.com.fafic.ppi.nossaBiblioteca.dto.ContatoDTO;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.ContatoRepository;
 import br.com.fafic.ppi.nossaBiblioteca.repositories.LoginRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,9 @@ public class ContatoService {
 
     private final ContatoRepository contatoRepository;
 
-    public Contato save(Contato contato){
+    public Contato save(ContatoDTO contatoDTO){
+        var contato = new Contato(contatoDTO.getEmail(),
+                contatoDTO.getNumero());
         return contatoRepository.save(contato);
     }
 

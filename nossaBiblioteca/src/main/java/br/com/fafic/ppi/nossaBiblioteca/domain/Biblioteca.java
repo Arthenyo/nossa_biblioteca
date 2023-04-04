@@ -11,8 +11,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Biblioteca {
     @Id
@@ -28,4 +26,12 @@ public class Biblioteca {
     private List<Aluno> alunos;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Professor> professores;
+
+    public Biblioteca(String nome, Bibliotecario bibliotecario, List<Livro> livros, List<Aluno> alunos, List<Professor> professores) {
+        this.nome = nome;
+        this.bibliotecario = bibliotecario;
+        this.livros = livros;
+        this.alunos = alunos;
+        this.professores = professores;
+    }
 }
