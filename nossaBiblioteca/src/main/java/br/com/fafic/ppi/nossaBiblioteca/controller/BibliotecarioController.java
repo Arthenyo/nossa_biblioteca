@@ -50,7 +50,8 @@ public class BibliotecarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.save(contatoDTO));
     }
     @PostMapping("/devolucao")
-    public ResponseEntity<Devolucao> saveDevolucao(@RequestBody @Valid DevolucaoDTO devolucaoDTO){
+    public ResponseEntity<Devolucao> saveDevolucao(@RequestBody DevolucaoDTO devolucaoDTO,Long idempretimo){
+        devolucaoDTO.setEmprestimo(emprestimoService.findById(idempretimo));
         return ResponseEntity.status(HttpStatus.CREATED).body(devolucaoService.save(devolucaoDTO));
     }
     @PostMapping("/endereco")

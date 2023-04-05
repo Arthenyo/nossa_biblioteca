@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Data
 public class EmprestimoDTO {
 
+    private Double valoremprestimo;
     private Aluno aluno;
     private Professor professor;
     private LocalDate dataDoEmprestimo;

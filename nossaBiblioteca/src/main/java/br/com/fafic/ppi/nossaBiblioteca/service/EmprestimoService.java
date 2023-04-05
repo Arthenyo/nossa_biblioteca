@@ -20,7 +20,8 @@ public class EmprestimoService {
     private Livro livro;
 
     public Emprestimo save(EmprestimoDTO emprestimoDTO){
-        var emprestimo = new Emprestimo(emprestimoDTO.getAluno(),
+        var emprestimo = new Emprestimo(emprestimoDTO.getValoremprestimo(),
+                emprestimoDTO.getAluno(),
                 emprestimoDTO.getProfessor(),
                 emprestimoDTO.getDataDoEmprestimo(),
                 emprestimoDTO.getLivro());

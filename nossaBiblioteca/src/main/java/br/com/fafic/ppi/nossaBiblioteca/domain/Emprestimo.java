@@ -16,6 +16,8 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Double valorempretimo = 0.0;
     @ManyToOne(cascade = CascadeType.ALL)
     private Aluno aluno;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -24,7 +26,8 @@ public class Emprestimo {
     @OneToOne(cascade = CascadeType.ALL)
     private Livro livro;
 
-    public Emprestimo(Aluno aluno, Professor professor, LocalDate dataDoEmprestimo, Livro livro) {
+    public Emprestimo(Double valorempretimo, Aluno aluno, Professor professor, LocalDate dataDoEmprestimo, Livro livro) {
+        this.valorempretimo = valorempretimo;
         this.aluno = aluno;
         this.professor = professor;
         this.dataDoEmprestimo = dataDoEmprestimo;
