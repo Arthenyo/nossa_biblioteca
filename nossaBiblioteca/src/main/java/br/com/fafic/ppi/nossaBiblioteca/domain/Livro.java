@@ -4,8 +4,6 @@ import br.com.fafic.ppi.nossaBiblioteca.enums.AreaEnum;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,13 +22,10 @@ public class Livro {
         private String nome;
         @Enumerated(EnumType.STRING)
         private AreaEnum area;
-        @OneToOne(cascade = CascadeType.ALL)
-        private Emprestimo emprestimo;
 
-        public Livro(String isbn, String nome, AreaEnum area, Emprestimo emprestimo) {
+        public Livro(String isbn, String nome, AreaEnum area) {
                 this.isbn = isbn;
                 this.nome = nome;
                 this.area = area;
-                this.emprestimo = emprestimo;
         }
 }

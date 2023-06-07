@@ -34,10 +34,13 @@ public abstract class Pessoa {
     @Enumerated(EnumType.STRING)
     private GeneroEnum genero;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id",referencedColumnName = "id")
     private Endereco endereco;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contato_id",referencedColumnName = "id")
     private Contato contato;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id",referencedColumnName = "id")
     private Login login;
 
     public Pessoa(String nome, String cpf, String matricula, GeneroEnum genero, Endereco endereco, Contato contato, Login login) {

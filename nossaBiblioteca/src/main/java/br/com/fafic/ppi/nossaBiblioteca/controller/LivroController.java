@@ -1,5 +1,6 @@
 package br.com.fafic.ppi.nossaBiblioteca.controller;
 
+import br.com.fafic.ppi.nossaBiblioteca.domain.Aluno;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Emprestimo;
 import br.com.fafic.ppi.nossaBiblioteca.domain.Livro;
 import br.com.fafic.ppi.nossaBiblioteca.service.EmprestimoService;
@@ -20,7 +21,6 @@ import java.util.Optional;
 public class LivroController {
 
     private final LivroService livroService;
-    private final EmprestimoService emprestimoService;
     private Validator validator;
 
 
@@ -33,6 +33,22 @@ public class LivroController {
     @GetMapping("/{id}")
     public ResponseEntity<Livro> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(livroService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Livro> save(@Valid @RequestBody Livro livro) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Livro> update(@PathVariable Long id, @Valid @RequestBody Livro livro) {
+        return ResponseEntity.ok(livroService.update(id,livro));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        livroService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

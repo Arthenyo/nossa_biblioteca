@@ -18,18 +18,13 @@ public class Emprestimo {
     private Long id;
 
     private Double valorempretimo = 0.0;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Aluno aluno;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Professor professor;
     private LocalDate dataDoEmprestimo;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Livro livro;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "emprestimo_id")
+    private List<Livro> livro;
 
-    public Emprestimo(Double valorempretimo, Aluno aluno, Professor professor, LocalDate dataDoEmprestimo, Livro livro) {
+    public Emprestimo(Double valorempretimo, LocalDate dataDoEmprestimo, List<Livro> livro) {
         this.valorempretimo = valorempretimo;
-        this.aluno = aluno;
-        this.professor = professor;
         this.dataDoEmprestimo = dataDoEmprestimo;
         this.livro = livro;
     }

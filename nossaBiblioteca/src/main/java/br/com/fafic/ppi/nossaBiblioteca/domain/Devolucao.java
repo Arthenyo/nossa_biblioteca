@@ -15,7 +15,8 @@ public class Devolucao{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
+    @JoinColumn(name = "empretimo_id",referencedColumnName = "id")
     private Emprestimo emprestimo;
     private LocalDate dataDeDevolucao;
 

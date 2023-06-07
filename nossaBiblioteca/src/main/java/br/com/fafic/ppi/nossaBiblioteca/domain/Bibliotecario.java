@@ -14,7 +14,6 @@ import java.util.List;
 @Data
 @DiscriminatorValue("Bibliotecario")
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "pessoa_id")
 public class Bibliotecario extends Pessoa{
 
     public Bibliotecario(String nome, String cpf, String matricula, GeneroEnum genero, Endereco endereco, Contato contato, Login login) {

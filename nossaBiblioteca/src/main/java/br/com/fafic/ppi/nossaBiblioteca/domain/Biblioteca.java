@@ -19,12 +19,16 @@ public class Biblioteca {
     @Size(min = 3)
     private String nome;
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bibliotecario_id")
     private Bibliotecario bibliotecario;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "biblioteca_id")
     private List<Livro> livros;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "biblioteca_id")
     private List<Aluno> alunos;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "biblioteca_id")
     private List<Professor> professores;
 
     public Biblioteca(String nome, Bibliotecario bibliotecario, List<Livro> livros, List<Aluno> alunos, List<Professor> professores) {
